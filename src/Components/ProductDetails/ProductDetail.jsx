@@ -1,7 +1,7 @@
 // src/components/ProductDetail.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProductById } from '../services/api';
+import { fetchProductById } from '../../services/api';
 import './ProductDetail.css'; // Importar el archivo CSS
 
 const ProductDetail = () => {

@@ -1,7 +1,7 @@
 // src/components/ProductList.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchProducts } from '../services/api';
+import { fetchProducts } from '../../services/api';
 import './ProductList.css';
 
 const ProductList = ({ searchTerm }) => {
