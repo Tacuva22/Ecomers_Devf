@@ -2,12 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../../services/api';
+import { useCart } from '../../context/CartContext';
 import './ProductDetail.css'; // Importar el archivo CSS
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -37,7 +39,7 @@ const ProductDetail = () => {
       <h1>{product.product_name}</h1>
       <p>{product.description}</p>
       <p>${product.price}</p>
-      <button>Comprar</button>
+      <button onClick={() => addToCart(product)}>Add to Cart</button>
     </div>
   );
 };

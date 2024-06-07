@@ -1,14 +1,12 @@
 // src/components/NavBar.jsx
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './NavBar.css';
+import { useCart } from '../../context/CartContext';
 
-const NavBar = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-    onSearch(e.target.value);
-  };
+const NavBar = ({ user, onLogout }) => {
+  const { cart } = useCart();
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <nav className="navbar">
@@ -18,16 +16,22 @@ const NavBar = ({ onSearch }) => {
       <div className="navbar-links">
         <a href="/">Home</a>
         <a href="/products">Productos</a>
-        <a href="/login">Login</a>
-        <a href="/signup">Signup</a>
+        {user ? (
+          <>
+            {user.userType === 'ADMIN' && <a href="/create-product">Admin</a>}
+            <a href="/profile">Perfil</a>
+            <button onClick={onLogout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <a href="/login">Login</a>
+            <a href="/signup">Signup</a>
+          </>
+        )}
+        <Link to="/cart">Cart ({totalItems})</Link>
       </div>
       <div className="navbar-search">
-        <input
-          type="text"
-          placeholder="Buscar productos..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
+        <input type="text" placeholder="Buscar productos..." />
       </div>
     </nav>
   );

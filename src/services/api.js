@@ -26,7 +26,10 @@ export const fetchProductById = async (id) => {
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post(`${API_URL}/login`, { email, password });
-    return response.data;
+    const user = response.data.user;
+    const token = response.data.token;
+    const userType = user.role; // Asumiendo que 'role' contiene el tipo de usuario
+    return { user, token, userType };
   } catch (error) {
     console.error('Error logging in:', error);
     throw error;
@@ -39,6 +42,16 @@ export const registerUser = async (email, password, name) => {
     return response.data;
   } catch (error) {
     console.error('Error signing up:', error);
+    throw error;
+  }
+};
+
+export const createProduct = async ({ name, description, price, image }) => {
+  try {
+    const response = await axios.post(`${API_URL}/item`, { product_name: name, description, price, image });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating product:', error);
     throw error;
   }
 };
